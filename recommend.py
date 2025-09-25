@@ -1,5 +1,6 @@
 import pandas as pd
 from collections import Counter
+from difflib import SequenceMatcher
 
 # Load cleaned data
 df = pd.read_csv('cleaned_survey_data.csv')
@@ -28,17 +29,33 @@ def get_recommendations(user_inputs, k=5):
                'what_kind_of_vibe_are_you_going': 1, 'what_outfit_are_you_wearing': 1, 
                'outfit_neckline_shape': 1}
 
+    def get_similarity_score(val, row_val, weight):
+        if not isinstance(row_val, str) or not row_val.strip():
+            return 0
+        val_lower = val.lower()
+        row_lower = row_val.lower()
+        
+        # Check for substring match first
+        if val_lower in row_lower or row_lower in val_lower:
+            return weight * 0.75  # Good match for substrings
+        
+        # Otherwise, use fuzzy similarity
+        similarity = SequenceMatcher(None, val_lower, row_lower).ratio()
+        if similarity >= 0.9:  # very close
+            return weight
+        elif similarity >= 0.7:  # reasonable fuzzy match
+            return weight * 0.6
+        elif similarity >= 0.5:  # partial fuzzy
+            return weight * 0.4
+        else:
+            return 0
+
     # Compute similarity scores for each row
     scores = []
     for idx, row in filtered_df.iterrows():
         score = 0
         for feat, val in user_inputs.items():
-            # Exact match
-            if row[feat] == val:
-                score += weights.get(feat, 1)
-            # Partial match for flexibility (contains keyword)
-            elif val in row[feat] or row[feat] in val:
-                score += weights.get(feat, 1) * 0.5
+            score += get_similarity_score(val, row[feat], weights.get(feat, 1))
         scores.append((idx, score))
 
     # Sort by score descending, take top k with score > 0
