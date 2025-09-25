@@ -1,42 +1,70 @@
 
-# Project Title
+# Fashion & Makeup Recommendation System
 
-Brief description of what the project does and its main features.
+A Python-based recommendation system that suggests makeup looks, jewelry, and accessories based on fashion survey data. Uses fuzzy matching to provide personalized recommendations for events and outfits.
 
 ## Table of Contents
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [File Overview](#file-overview)
+- [Data](#data)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
 
 ## Features
-- Feature 1
-- Feature 2
-- Feature 3
+- **Personalized Recommendations**: Get makeup and accessory suggestions based on your age, event type, vibe, outfit, and neckline
+- **Fuzzy Matching**: Handles partial inputs and variations using intelligent string matching
+- **Confidence Scoring**: Provides confidence levels for recommendations
+- **Survey-Based**: Recommendations derived from real fashion survey data
+- **Interactive CLI**: Easy-to-use command-line interface
 
 ## Installation
 Clone the repository and install dependencies:
 
 ```bash
-git clone <repo-url>
-cd <repo-folder>
-pip install -r requirements.txt
+git clone https://github.com/elxecutor/glen.git
+cd glen
+pip install pandas
 ```
 
 ## Usage
-1. Step 1:
-   ```bash
-   # command
-   ```
-2. Step 2:
-   ```bash
-   # command
-   ```
+Run the recommendation system:
+
+```bash
+python recommend.py
+```
+
+Follow the prompts to enter your:
+- Age group
+- Event type
+- Desired vibe
+- Outfit type
+- Neckline shape
+
+The system will provide recommendations with confidence scores.
+
+Example output:
+```
+=== Your Recommendations (Confidence: 52%) ===
+• Makeup Look: Clear Gloss, Lip Liner + Gloss
+• Earrings: Small Studs
+• Necklace: Pendant Necklace
+• Bracelets: Beaded Bracelets
+• Other Accessories: Rings, Hair Clips/Bands
+
+Based on similar users in our survey data! ✨
+```
 
 ## File Overview
+- `recommend.py` - Main recommendation engine with fuzzy matching
+- `clean_data.py` - Data cleaning and preprocessing script
+- `cleaned_survey_data.csv` - Processed survey data
+- `Fashion + Makeup Choices Survey 🎀 .csv` - Raw survey data
+
+## Data
+The system uses anonymized survey data from fashion and makeup preferences. The dataset includes responses about makeup choices, jewelry preferences, and accessory selections for various events and outfits.
 
 ## Contributing
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) for details.
